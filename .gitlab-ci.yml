@@ -70,8 +70,13 @@ clippy:
   script:
     # FIXME: remove after stable clippy added to ci-linux
     - rustup component add clippy
-    - cargo clippy --all-targets --verbose
-    - RUSTDOCFLAGS="--deny broken_intra_doc_links" cargo doc --verbose --workspace --no-deps --document-private-items
+    - cargo clippy --all-targets
+
+check-rustdoc-links:
+  stage:                           lint
+  <<:                              *docker-env
+  script:
+    - RUSTDOCFLAGS="--deny broken_intra_doc_links" cargo doc --workspace --no-deps --document-private-items
 
 #### stage:                       test
 
